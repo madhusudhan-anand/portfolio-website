@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madhusudhan Anand | DevOps & Cloud Engineer</title>
+  <style>
+    :root {
+      --primary: #0a192f;
+      --secondary: #64ffda;
+      --text: #ccd6f6;
+      --text-secondary: #8892b0;
+      --highlight: #233554;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Courier New', monospace;
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      background-color: var(--primary);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      background-color: rgba(10, 25, 47, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+    
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--secondary);
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 2rem;
+    }
+    
+    nav ul li a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    nav ul li a:hover {
+      color: var(--secondary);
+    }
+    
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 5rem;
+    }
+    
+    .hero small {
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero h2 {
+      font-size: 2.5rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+    
+    .hero p {
+      max-width: 600px;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-size: 1.2rem;
+    }
+    
+    .hero .cta {
+      display: inline-block;
+      background: transparent;
+      color: var(--secondary);
+      border: 1px solid var(--secondary);
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    
+    .hero .cta:hover {
+      background: rgba(100, 255, 218, 0.1);
+      transform: translateY(-3px);
+    }
+    
+    section {
+      padding: 6rem 0;
+    }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    
+    .section-title h2 {
+      font-size: 2rem;
+      margin-right: 1rem;
+      white-space: nowrap;
+    }
+    
+    .section-title .line {
+      height: 1px;
+      width: 300px;
+      background-color: var(--highlight);
+    }
+    
+    .about-content {
+      display: flex;
+      gap: 2rem;
+    }
+    
+    .about-text {
+      flex: 2;
+    }
+    
+    .about-text p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    
+    .skills {
+      flex: 1;
+    }
+    
+    .skills-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      list-style: none;
+    }
+    
+    .skills-list li {
+      position: relative;
+      padding-left: 1.2rem;
+      color: var(--text-secondary);
+    }
+    
+    .skills-list li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--secondary);
+    }
+    
+    .experience-item {
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    
+    .experience-title {
+      display: flex;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+    
+    .experience-title h3 {
+      color: var(--text);
+      margin-right: 1rem;
+    }
+    
+    .experience-title .company {
+      color: var(--secondary);
+    }
+    
+    .experience-duration {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .experience-details ul {
+      list-style: none;
+    }
+    
+    .experience-details li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: 0.8rem;
+      color: var(--text-secondary);
+    }
+    
+    .experience-details li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--secondary);
+    }
+    
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .project-card {
+      background-color: var(--highlight);
+      padding: 2rem;
+      border-radius: 4px;
+      transition: transform 0.3s ease;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .project-card .folder {
+      color: var(--secondary);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .project-card h3 {
+      margin-bottom: 1rem;
+    }
+    
+    .project-card p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      min-height: 80px;
+    }
+    
+    .project-card .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .project-card .tech-stack span {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .project-card .links {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .project-card .links a {
+      color: var(--text);
+      text-decoration: none;
+    }
+    
+    .project-card .links a:hover {
+      color: var(--secondary);
+    }
+    
+    .contact {
+      text-align: center;
+    }
+    
+    .contact h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .contact p {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      color: var(--text-secondary);
+    }
+    
+    .contact .cta {
+      display: inline-block;
+      background: transparent;
+      color: var(--secondary);
+      border: 1px solid var(--secondary);
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    
+    .contact .cta:hover {
+      background: rgba(100, 255, 218, 0.1);
+    }
+    
+    footer {
+      padding: 2rem 0;
+      text-align: center;
+      color: var(--text-secondary);
+    }
+    
+    footer .social {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    footer .social a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    footer .social a:hover {
+      color: var(--secondary);
+    }
+    
+    .terminal-effect {
+      position: relative;
+      overflow: hidden;
+      padding: 2rem;
+      background-color: rgba(35, 53, 84, 0.5);
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      margin-bottom: 2rem;
+    }
+    
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .terminal-circles {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .circle {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .circle-red {
+      background-color: #ff5f56;
+    }
+    
+    .circle-yellow {
+      background-color: #ffbd2e;
+    }
+    
+    .circle-green {
+      background-color: #27c93f;
+    }
+    
+    .terminal-title {
+      flex-grow: 1;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    
+    .terminal-content {
+      line-height: 1.5;
+    }
+    
+    .command {
+      display: flex;
+      margin-bottom: 0.5rem;
+    }
+    
+    .prompt {
+      color: var(--secondary);
+      margin-right: 0.5rem;
+    }
+    
+    .typed-text {
+      color: var(--text);
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--secondary);
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+    
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: var(--secondary) }
+    }
+    
+    .response {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero h2 {
+        font-size: 1.8rem;
+      }
+      
+      .about-content {
+        flex-direction: column;
+      }
+      
+      .skills-list {
+        grid-template-columns: 1fr;
+      }
+      
+      nav ul {
+        display: none;
+      }
+    }
+
+    /* AWS Service Icons Animation */
+    .aws-services {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    
+    .service-icon {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      opacity: 0.7;
+      transition: all 0.3s ease;
+    }
+    
+    .service-icon:hover {
+      opacity: 1;
+      transform: translateY(-5px);
+      color: var(--secondary);
+    }
+    
+    .service-icon span {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .service-icon p {
+      font-size: 0.8rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="container">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  
+  <main class="container">
+    <section class="hero">
+      <small>Hi, my name is</small>
+      <h1>Madhusudhan Anand.</h1>
+      <h2>I build cloud infrastructure.</h2>
+      <p>I'm a DevOps and Cloud Engineer specializing in building reliable, scalable, and cost-effective infrastructure on AWS. Currently focused on cloud optimization and infrastructure automation.</p>
+      <a href="#contact" class="cta">Get In Touch</a>
+    </section>
+    
+    <div class="terminal-effect">
+      <div class="terminal-header">
+        <div class="terminal-circles">
+          <div class="circle circle-red"></div>
+          <div class="circle circle-yellow"></div>
+          <div class="circle circle-green"></div>
+        </div>
+        <div class="terminal-title">madhu@anand: ~/projects</div>
+      </div>
+      <div class="terminal-content">
+        <div class="command">
+          <span class="prompt">$</span>
+          <span class="typed-text">aws --version</span>
+        </div>
+        <p class="response">aws-cli/2.15.12 Python/3.11.6 Darwin/23.4.0 exe/x86_64 prompt/off</p>
+        
+        <div class="command">
+          <span class="prompt">$</span>
+          <span class="typed-text">terraform --version</span>
+        </div>
+        <p class="response">Terraform v1.7.3</p>
+        
+        <div class="command">
+          <span class="prompt">$</span>
+          <span class="typed-text">kubectl version --client</span>
+        </div>
+        <p class="response">Client Version: v1.28.4</p>
+        
+        <div class="command">
+          <span class="prompt">$</span>
+          <span class="typed-text">cd ~/skills && ls -la</span>
+        </div>
+        <p class="response">
+          total 40<br>
+          drwxr-xr-x  2 madhu staff  4096 May 15 09:23 .<br>
+          drwxr-xr-x 16 madhu staff  4096 May 15 09:23 ..<br>
+          -rw-r--r--  1 madhu staff  4096 May 15 09:23 aws.md<br>
+          -rw-r--r--  1 madhu staff  4096 May 15 09:23 ci-cd.md<br>
+          -rw-r--r--  1 madhu staff  4096 May 15 09:23 containers.md<br>
+          -rw-r--r--  1 madhu staff  4096 May 15 09:23 iac.md<br>
+          -rw-r--r--  1 madhu staff  4096 May 15 09:23 monitoring.md<br>
+          -rw-r--r--  1 madhu staff  4096 May 15 09:23 scripting.md<br>
+        </p>
+      </div>
+    </div>
+    
+    <section id="about">
+      <div class="section-title">
+        <h2>About Me</h2>
+        <div class="line"></div>
+      </div>
+      <div class="about-content">
+        <div class="about-text">
+          <p>Hello! I'm Madhusudhan, a DevOps and Cloud Engineer with 5 years of experience building and optimizing infrastructure on AWS. My journey began with a mechanical engineering degree, but I quickly discovered my passion for cloud technologies and infrastructure automation.</p>
+          <p>Currently, I'm pursuing my MS in Information Systems at Saint Louis University, enhancing my technical skills with business and data analytics knowledge. I thrive on creating efficient CI/CD pipelines, implementing Infrastructure as Code, and optimizing cloud environments for performance and cost.</p>
+          <p>My experience spans across the entire DevOps lifecycle - from infrastructure provisioning and configuration management to monitoring and optimization. I'm particularly proud of my work in reducing cloud costs while improving system reliability and performance.</p>
+        </div>
+        <div class="skills">
+          <h3>Key Skills:</h3>
+          <ul class="skills-list">
+            <li>AWS Cloud Services</li>
+            <li>Infrastructure as Code</li>
+            <li>CI/CD Pipelines</li>
+            <li>Docker & Kubernetes</li>
+            <li>Monitoring & Observability</li>
+            <li>Cost Optimization</li>
+            <li>Python & Bash Scripting</li>
+            <li>Cloud Security</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="aws-services">
+        <div class="service-icon">
+          <span>⚙️</span>
+          <p>EC2</p>
+        </div>
+        <div class="service-icon">
+          <span>🗄️</span>
+          <p>S3</p>
+        </div>
+        <div class="service-icon">
+          <span>🛢️</span>
+          <p>RDS</p>
+        </div>
+        <div class="service-icon">
+          <span>🔒</span>
+          <p>IAM</p>
+        </div>
+        <div class="service-icon">
+          <span>🐳</span>
+          <p>ECS</p>
+        </div>
+        <div class="service-icon">
+          <span>⚓</span>
+          <p>EKS</p>
+        </div>
+        <div class="service-icon">
+          <span>λ</span>
+          <p>Lambda</p>
+        </div>
+        <div class="service-icon">
+          <span>📊</span>
+          <p>CloudWatch</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="experience">
+      <div class="section-title">
+        <h2>Work Experience</h2>
+        <div class="line"></div>
+      </div>
+      
+      <div class="experience-item">
+        <div class="experience-title">
+          <h3>DevOps Engineer</h3>
+          <span class="company">@ Euphoric Thought Technologies</span>
+        </div>
+        <p class="experience-duration">Feb 2021 - May 2023</p>
+        <div class="experience-details">
+          <ul>
+            <li>Built CI/CD pipelines using CodePipeline, CodeBuild, and Docker to deploy containers on ECS Fargate, reducing release time by 60% and supporting up to 10 daily deployments.</li>
+            <li>Automated infrastructure provisioning with CloudFormation, improving consistency and reducing setup time by 85%.</li>
+            <li>Reduced AWS cloud costs by over $30,000 annually, a 20% decrease in total spend, through monthly usage audits, auto-scaling, and right-sizing.</li>
+            <li>Implemented observability with Prometheus, Grafana, and New Relic, reducing resolution time by 35%.</li>
+            <li>Led a 7-member team to deliver a production-ready AWS environment tailored to client requirements.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="experience-item">
+        <div class="experience-title">
+          <h3>Cloud Engineer</h3>
+          <span class="company">@ Qwikcilver Solutions</span>
+        </div>
+        <p class="experience-duration">May 2019 - Feb 2021</p>
+        <div class="experience-details">
+          <ul>
+            <li>Collaborated with DevOps and finance teams to implement cost tagging and IAM-based access controls, enhancing cloud cost accountability and security.</li>
+            <li>Provisioned and configured AWS services (EC2, RDS, S3, VPC, IAM) to support multi-stage environments, accelerating setup by 50% and enabling parallel deployments.</li>
+            <li>Documented AWS configurations, deployment standards, and IAM policies, reducing onboarding time and support queries by 30%.</li>
+            <li>Assisted in migrating 40+ on-prem servers to AWS, enabling scalable infrastructure and automating manual operations.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="experience-item">
+        <div class="experience-title">
+          <h3>Cloud Intern</h3>
+          <span class="company">@ Qwikcilver Solutions</span>
+        </div>
+        <p class="experience-duration">May 2018 - May 2019</p>
+        <div class="experience-details">
+          <ul>
+            <li>Shadowed senior engineers, gaining hands-on experience with infrastructure, deployments, and DevOps practices.</li>
+            <li>Assisted in provisioning AWS resources like EC2, S3, and IAM for dev/test environments to support stable infrastructure.</li>
+            <li>Helped set up CI/CD pipelines using Jenkins and Docker, and configured CloudWatch alerts for early application monitoring.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="projects">
+      <div class="section-title">
+        <h2>Featured Projects</h2>
+        <div class="line"></div>
+      </div>
+      
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="folder">📁</div>
+          <h3>CI/CD Pipeline with AWS DevOps</h3>
+          <p>Built a CI/CD pipeline on AWS to deploy a containerized Flask app using ECS Fargate and CloudFormation.</p>
+          <div class="tech-stack">
+            <span>Flask</span>
+            <span>Docker</span>
+            <span>ECS Fargate</span>
+            <span>CodePipeline</span>
+            <span>CloudFormation</span>
+          </div>
+          <div class="links">
+            <a href="https://github.com/madhusudhan-anand/ecs-cicd-pipeline" target="_blank">GitHub</a>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="folder">📁</div>
+          <h3>Monitoring and Alerting System</h3>
+          <p>Built an automated monitoring system using CloudWatch, SNS, and Lambda to track EC2, RDS, and ALB health with auto-remediation actions.</p>
+          <div class="tech-stack">
+            <span>EC2</span>
+            <span>CloudWatch</span>
+            <span>SNS</span>
+            <span>Lambda</span>
+            <span>CloudTrail</span>
+          </div>
+          <div class="links">
+            <a href="https://github.com/madhusudhan-anand/monitoring-alerting-system" target="_blank">GitHub</a>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="folder">📁</div>
+          <h3>AWS Cost Optimization</h3>
+          <p>Implemented a comprehensive cost optimization strategy that reduced AWS cloud costs by over $30,000 annually through right-sizing and auto-scaling.</p>
+          <div class="tech-stack">
+            <span>AWS Cost Explorer</span>
+            <span>CloudWatch</span>
+            <span>Lambda</span>
+            <span>Python</span>
+          </div>
+          <div class="links">
+            <a href="#" target="_blank">Case Study</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="contact">
+      <div class="contact">
+        <h2>Get In Touch</h2>
+        <p>I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll do my best to get back to you!</p>
+        <a href="mailto:Madhusudhan.anand@outlook.com" class="cta">Say Hello</a>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    <div class="container">
+      <div class="social">
+        <a href="https://github.com/madhusudhan-anand" target="_blank">GitHub</a>
+        <a href="http://www.linkedin.com/in/madhusudhananand" target="_blank">LinkedIn</a>
+        <a href="mailto:Madhusudhan.anand@outlook.com">Email</a>
+      </div>
+      <p>Designed & Built by Madhusudhan Anand</p>
+      <p>© 2025</p>
+    </div>
+  </footer>
+</body>
+</html>
