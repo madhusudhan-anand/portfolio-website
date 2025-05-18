@@ -38,6 +38,15 @@
     footer .social { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; }
     footer .social a { color: #ccd6f6; text-decoration: none; }
     footer .social a:hover { color: #64ffda; }
+    .featured-tag { 
+      background-color: #64ffda; 
+      color: #0a192f; 
+      padding: 0.2rem 0.5rem; 
+      border-radius: 4px; 
+      font-size: 0.8rem; 
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
   </style>
 </head>
 <body>
@@ -69,7 +78,9 @@
         <h2>Featured Projects</h2>
         <div class="line"></div>
       </div>
+      
       <div class="projects-grid" id="github-projects">
+        <!-- The serverless-data-pipeline will be prepended here by JavaScript -->
         <p style="color: #8892b0;">Loading latest projects from GitHub...</p>
       </div>
     </section>
@@ -98,6 +109,7 @@
   <script>
     const username = "madhusudhan-anand";
     const container = document.getElementById("github-projects");
+    const featuredProjectName = "serverless-data-pipeline";
 
     fetch(`https://api.github.com/users/${username}/repos`)
       .then(res => res.json())
@@ -107,25 +119,48 @@
           .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
 
         container.innerHTML = "";
+        
+        // Add the featured project first with a FEATURED tag
+        const featuredCard = document.createElement("div");
+        featuredCard.className = "project-card";
+        featuredCard.innerHTML = `
+          <div class="folder">📁</div>
+          <h3><span class="featured-tag">FEATURED</span>serverless-data-pipeline</h3>
+          <p>A scalable serverless data processing pipeline built with AWS Lambda, Step Functions, and S3 for automated ETL workflows.</p>
+          <div class="tech-stack">
+            <span>Python</span>
+            <span>AWS</span>
+            <span>Terraform</span>
+          </div>
+          <div class="links">
+            <a href="https://github.com/madhusudhan-anand/serverless-data-pipeline" target="_blank">GitHub</a>
+          </div>
+        `;
+        container.appendChild(featuredCard);
 
-        filtered.forEach(repo => {
-          const card = document.createElement("div");
-          card.className = "project-card";
+        // Show up to 3 other projects (excluding the featured one if it exists)
+        let count = 0;
+        for (const repo of filtered) {
+          if (repo.name.toLowerCase() !== featuredProjectName.toLowerCase() && count < 3) {
+            const card = document.createElement("div");
+            card.className = "project-card";
 
-          card.innerHTML = `
-            <div class="folder">📁</div>
-            <h3>${repo.name}</h3>
-            <p>${repo.description || "No description available."}</p>
-            <div class="tech-stack">
-              <span>${repo.language || "Tech Stack"}</span>
-            </div>
-            <div class="links">
-              <a href="${repo.html_url}" target="_blank">GitHub</a>
-            </div>
-          `;
+            card.innerHTML = `
+              <div class="folder">📁</div>
+              <h3>${repo.name}</h3>
+              <p>${repo.description || "No description available."}</p>
+              <div class="tech-stack">
+                <span>${repo.language || "Tech Stack"}</span>
+              </div>
+              <div class="links">
+                <a href="${repo.html_url}" target="_blank">GitHub</a>
+              </div>
+            `;
 
-          container.appendChild(card);
-        });
+            container.appendChild(card);
+            count++;
+          }
+        }
       })
       .catch(error => {
         container.innerHTML = "<p style='color: red;'>Error loading GitHub projects.</p>";
