@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Madhusudhan Anand | DevOps & Cloud Engineer</title>
   <style>
-    /* your existing CSS remains unchanged */
     body { background-color: #0a192f; color: #ccd6f6; font-family: 'Courier New', monospace; margin: 0; }
     .container { max-width: 1200px; margin: auto; padding: 0 2rem; }
     nav { background: rgba(10,25,47,0.85); position: fixed; top: 0; width: 100%; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; }
@@ -70,7 +69,42 @@
         <div class="line"></div>
       </div>
       <div class="projects-grid" id="github-projects">
-        <p style="color: #8892b0;">Loading latest projects from GitHub...</p>
+        <!-- Hardcoded projects -->
+        <div class="project-card">
+          <div class="folder">📁</div>
+          <h3>CI/CD Pipeline with AWS DevOps</h3>
+          <p>Built a CI/CD pipeline on AWS to deploy a containerized Flask app using ECS Fargate and CloudFormation.</p>
+          <div class="tech-stack">
+            <span>Flask</span><span>Docker</span><span>ECS Fargate</span><span>CodePipeline</span><span>CloudFormation</span>
+          </div>
+          <div class="links">
+            <a href="https://github.com/madhusudhan-anand/ecs-cicd-pipeline" target="_blank">GitHub</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="folder">📁</div>
+          <h3>Monitoring and Alerting System</h3>
+          <p>Built an automated monitoring system using CloudWatch, SNS, and Lambda to track EC2, RDS, and ALB health with auto-remediation actions.</p>
+          <div class="tech-stack">
+            <span>EC2</span><span>CloudWatch</span><span>SNS</span><span>Lambda</span><span>CloudTrail</span>
+          </div>
+          <div class="links">
+            <a href="https://github.com/madhusudhan-anand/monitoring-alerting-system" target="_blank">GitHub</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="folder">📁</div>
+          <h3>AWS Cost Optimization</h3>
+          <p>Implemented a comprehensive cost optimization strategy that reduced AWS cloud costs by over $30,000 annually through right-sizing and auto-scaling.</p>
+          <div class="tech-stack">
+            <span>AWS Cost Explorer</span><span>CloudWatch</span><span>Lambda</span><span>Python</span>
+          </div>
+          <div class="links">
+            <a href="#" target="_blank">Case Study</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -95,41 +129,32 @@
     </div>
   </footer>
 
+  <!-- Script to add dynamic GitHub project -->
   <script>
     const username = "madhusudhan-anand";
+    const dynamicProject = "serverless-data-pipeline";
     const container = document.getElementById("github-projects");
 
-    fetch(`https://api.github.com/users/${username}/repos`)
+    fetch(`https://api.github.com/repos/${username}/${dynamicProject}`)
       .then(res => res.json())
-      .then(repos => {
-        const filtered = repos
-          .filter(repo => !repo.fork)
-          .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
-
-        container.innerHTML = "";
-
-        filtered.forEach(repo => {
-          const card = document.createElement("div");
-          card.className = "project-card";
-
-          card.innerHTML = `
-            <div class="folder">📁</div>
-            <h3>${repo.name}</h3>
-            <p>${repo.description || "No description available."}</p>
-            <div class="tech-stack">
-              <span>${repo.language || "Tech Stack"}</span>
-            </div>
-            <div class="links">
-              <a href="${repo.html_url}" target="_blank">GitHub</a>
-            </div>
-          `;
-
-          container.appendChild(card);
-        });
+      .then(repo => {
+        const card = document.createElement("div");
+        card.className = "project-card";
+        card.innerHTML = `
+          <div class="folder">📁</div>
+          <h3>${repo.name}</h3>
+          <p>${repo.description || "No description available."}</p>
+          <div class="tech-stack">
+            <span>${repo.language || "Tech Stack"}</span>
+          </div>
+          <div class="links">
+            <a href="${repo.html_url}" target="_blank">GitHub</a>
+          </div>
+        `;
+        container.appendChild(card);
       })
       .catch(error => {
-        container.innerHTML = "<p style='color: red;'>Error loading GitHub projects.</p>";
-        console.error("GitHub API Error:", error);
+        console.error("Failed to load dynamic project:", error);
       });
   </script>
 </body>
