@@ -98,15 +98,6 @@
   <script>
     const username = "madhusudhan-anand";
     const container = document.getElementById("github-projects");
-    const projectToReplace = "monitoring"; // The project to replace (case insensitive)
-    const customProjects = [
-      {
-        name: "serverless-data-pipeline",
-        description: "A scalable serverless data processing pipeline built with AWS Lambda, Step Functions, and S3 for automated ETL workflows.",
-        language: "Python, AWS, Terraform",
-        url: "https://github.com/madhusudhan-anand/serverless-data-pipeline"
-      }
-    ];
 
     fetch(`https://api.github.com/users/${username}/repos`)
       .then(res => res.json())
@@ -116,75 +107,25 @@
           .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
 
         container.innerHTML = "";
-        
-        // Process each repo
-        let count = 0;
-        let replacedMonitoring = false;
-        
-        for (const repo of filtered) {
-          // Check if this is the monitoring project to replace
-          if (repo.name.toLowerCase().includes(projectToReplace) && !replacedMonitoring) {
-            // Replace with serverless project
-            const card = document.createElement("div");
-            card.className = "project-card";
-            const customProject = customProjects[0];
-            
-            card.innerHTML = `
-              <div class="folder">📁</div>
-              <h3>${customProject.name}</h3>
-              <p>${customProject.description}</p>
-              <div class="tech-stack">
-                <span>${customProject.language}</span>
-              </div>
-              <div class="links">
-                <a href="${customProject.url}" target="_blank">GitHub</a>
-              </div>
-            `;
-            
-            container.appendChild(card);
-            replacedMonitoring = true;
-          } else if (count < 4 && !replacedMonitoring) {
-            // Show up to 4 projects
-            const card = document.createElement("div");
-            card.className = "project-card";
 
-            card.innerHTML = `
-              <div class="folder">📁</div>
-              <h3>${repo.name}</h3>
-              <p>${repo.description || "No description available."}</p>
-              <div class="tech-stack">
-                <span>${repo.language || "Tech Stack"}</span>
-              </div>
-              <div class="links">
-                <a href="${repo.html_url}" target="_blank">GitHub</a>
-              </div>
-            `;
-
-            container.appendChild(card);
-            count++;
-          }
-        }
-        
-        // If there was no monitoring project found, add the serverless project anyway
-        if (!replacedMonitoring) {
+        filtered.forEach(repo => {
           const card = document.createElement("div");
           card.className = "project-card";
-          const customProject = customProjects[0];
-          
+
           card.innerHTML = `
             <div class="folder">📁</div>
-            <h3>${customProject.name}</h3>
-            <p>${customProject.description}</p>
+            <h3>${repo.name}</h3>
+            <p>${repo.description || "No description available."}</p>
             <div class="tech-stack">
-              <span>${customProject.language}</span>
+              <span>${repo.language || "Tech Stack"}</span>
             </div>
             <div class="links">
-              <a href="${customProject.url}" target="_blank">GitHub</a>
+              <a href="${repo.html_url}" target="_blank">GitHub</a>
             </div>
           `;
-          
+
           container.appendChild(card);
-        }
+        });
       })
       .catch(error => {
         container.innerHTML = "<p style='color: red;'>Error loading GitHub projects.</p>";
