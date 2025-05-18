@@ -38,15 +38,6 @@
     footer .social { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; }
     footer .social a { color: #ccd6f6; text-decoration: none; }
     footer .social a:hover { color: #64ffda; }
-    .featured-tag { 
-      background-color: #64ffda; 
-      color: #0a192f; 
-      padding: 0.2rem 0.5rem; 
-      border-radius: 4px; 
-      font-size: 0.8rem; 
-      font-weight: bold;
-      margin-right: 0.5rem;
-    }
   </style>
 </head>
 <body>
@@ -78,9 +69,7 @@
         <h2>Featured Projects</h2>
         <div class="line"></div>
       </div>
-      
       <div class="projects-grid" id="github-projects">
-        <!-- The serverless-data-pipeline will be prepended here by JavaScript -->
         <p style="color: #8892b0;">Loading latest projects from GitHub...</p>
       </div>
     </section>
@@ -109,7 +98,15 @@
   <script>
     const username = "madhusudhan-anand";
     const container = document.getElementById("github-projects");
-    const featuredProjectName = "serverless-data-pipeline";
+    const projectToReplace = "monitoring"; // The project to replace (case insensitive)
+    const customProjects = [
+      {
+        name: "serverless-data-pipeline",
+        description: "A scalable serverless data processing pipeline built with AWS Lambda, Step Functions, and S3 for automated ETL workflows.",
+        language: "Python, AWS, Terraform",
+        url: "https://github.com/madhusudhan-anand/serverless-data-pipeline"
+      }
+    ];
 
     fetch(`https://api.github.com/users/${username}/repos`)
       .then(res => res.json())
@@ -120,28 +117,34 @@
 
         container.innerHTML = "";
         
-        // Add the featured project first with a FEATURED tag
-        const featuredCard = document.createElement("div");
-        featuredCard.className = "project-card";
-        featuredCard.innerHTML = `
-          <div class="folder">📁</div>
-          <h3><span class="featured-tag">FEATURED</span>serverless-data-pipeline</h3>
-          <p>A scalable serverless data processing pipeline built with AWS Lambda, Step Functions, and S3 for automated ETL workflows.</p>
-          <div class="tech-stack">
-            <span>Python</span>
-            <span>AWS</span>
-            <span>Terraform</span>
-          </div>
-          <div class="links">
-            <a href="https://github.com/madhusudhan-anand/serverless-data-pipeline" target="_blank">GitHub</a>
-          </div>
-        `;
-        container.appendChild(featuredCard);
-
-        // Show up to 3 other projects (excluding the featured one if it exists)
+        // Process each repo
         let count = 0;
+        let replacedMonitoring = false;
+        
         for (const repo of filtered) {
-          if (repo.name.toLowerCase() !== featuredProjectName.toLowerCase() && count < 3) {
+          // Check if this is the monitoring project to replace
+          if (repo.name.toLowerCase().includes(projectToReplace) && !replacedMonitoring) {
+            // Replace with serverless project
+            const card = document.createElement("div");
+            card.className = "project-card";
+            const customProject = customProjects[0];
+            
+            card.innerHTML = `
+              <div class="folder">📁</div>
+              <h3>${customProject.name}</h3>
+              <p>${customProject.description}</p>
+              <div class="tech-stack">
+                <span>${customProject.language}</span>
+              </div>
+              <div class="links">
+                <a href="${customProject.url}" target="_blank">GitHub</a>
+              </div>
+            `;
+            
+            container.appendChild(card);
+            replacedMonitoring = true;
+          } else if (count < 4 && !replacedMonitoring) {
+            // Show up to 4 projects
             const card = document.createElement("div");
             card.className = "project-card";
 
@@ -160,6 +163,27 @@
             container.appendChild(card);
             count++;
           }
+        }
+        
+        // If there was no monitoring project found, add the serverless project anyway
+        if (!replacedMonitoring) {
+          const card = document.createElement("div");
+          card.className = "project-card";
+          const customProject = customProjects[0];
+          
+          card.innerHTML = `
+            <div class="folder">📁</div>
+            <h3>${customProject.name}</h3>
+            <p>${customProject.description}</p>
+            <div class="tech-stack">
+              <span>${customProject.language}</span>
+            </div>
+            <div class="links">
+              <a href="${customProject.url}" target="_blank">GitHub</a>
+            </div>
+          `;
+          
+          container.appendChild(card);
         }
       })
       .catch(error => {
